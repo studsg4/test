@@ -1,0 +1,81 @@
+http://localhost:9999/STUDS/s3/getSub/xxxx S2-1           GET
+http://localhost:9999/STUDS/s3/delete?id=                     DELETE
+http://localhost:9999/STUDS/s3/getSpecific/{subType}          GET
+http://localhost:9999/STUDS/s3/getAll                         GET
+http://localhost:9999/STUDS/s3/update                         PUT
+http://localhost:9999/STUDS/s3/add                            POST
+{
+"subType":"BANK AUDITING",
+"nestTypeFk":"AUDITING",
+"adddedBy":"xxx1"
+}
+----------------------------------------------------------------------------
+http://localhost:9999/STUDS/s2/getNest/xxxx S1-1              GET
+http://localhost:9999/STUDS/s2/delete                        DELETE
+http://localhost:9999/STUDS/s2/getSpecific/{nestType}        GET
+http://localhost:9999/STUDS/s2/getAll                        GET
+http://localhost:9999/STUDS/s2/update                        PUT
+http://localhost:9999/STUDS/s2/add                           POST
+input:
+{
+"nestType":"ADANCED TAX",
+"typeFk":"IPCC",
+"adddedBy":"xx1"
+}
+----------------------------------------------------------------------------------
+http://localhost:9999/STUDS/s1/delete                        DELETE
+http://localhost:9999/STUDS/s1/getSpecific/xxxx S1-1            GET
+http://localhost:9999/STUDS/s1/getAll                        GET
+http://localhost:9999/STUDS/s1/update                        PUT
+http://localhost:9999/STUDS/s1/add                           POST
+input:
+{
+"type":"POLYCET",
+"adddedBy":"x1"
+}
+
+=========================================================================================================
+IPCC,POLYCET etc... One is select
+http://localhost:9999/STUDS/s2/getNest/IPCC              GET        TOPIC OR TAG OR TYPE OR OTHER
+Accounts,Audits etc...
+http://localhost:9999/STUDS/s3/getSub/AUDITING           GET
+Bank audit, etc...
+
+
+==========================================================================================================
+1.
+Requred table like this
+STUDS_QUESTIONS 
+qId question class topicOrChap subject correctAns other options
+
+write a query for this 
+In repositry layer
+
+Not extacly almost like this happend
+ 
+@Query("from Questions where class=:class and topicOrChap=:topicOrChap and subject=:subject")
+List<Questions> findByClassAndTopicChapAndSubject(@Param("class") String class,@Param("topicOrChap") String topicOrChap,@Param("subject") String subject);
+
+In service 
+just same as findAll method data will got
+  List<Questions>   repo.findByClassAndTopicChapAndSubject(class,topicOrChap,subject); 
+
+  Copy Entity to dto
+  Share dto to end user
+  
+  
+  Need of Ui dev end user selected topic class subject from ui side to we got  
+in controller also pass 3 method argumets class subject topic based on that we will got data...
+
+
+2.
+Reqired table
+STUDS_USERANS
+ansId userId qId userAns onTime other
+Just like Add data          To simple
+
+3. Compare relations and store val into one var that var is result 
+
+
+
+

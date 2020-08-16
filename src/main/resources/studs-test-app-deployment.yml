@@ -1,0 +1,56 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: studs-test
+  labels:
+    name: studs-test
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "8081"
+    port: 8081
+    targetPort: 8081
+  selector:
+    app: studs-test
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: studs-test
+spec: 
+  selector: 
+    matchLabels: 
+      app: studs-test
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: studs-test
+    spec:
+      containers:
+        - name: studs-test
+          image: studs973/studs-test:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8081
+          env: # Setting Enviornmental Variables
+          - name: DB_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: studs-test-db-conf
+                key: host
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: studs-test-db-conf
+                key: name
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: studs-test-db-credentials
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: studs-test-db-credentials
+                key: password
